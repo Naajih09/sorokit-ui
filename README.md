@@ -40,6 +40,17 @@ export function App() {
 }
 ```
 
+## Local development
+
+This repo depends on a local, unpublished `@sorokit/core` via `file:../sorokit-core`
+in `devDependencies`. It intentionally opts out of pnpm workspace mode
+(`.npmrc` → `ignore-workspace=true`) — workspace-protocol linking
+(`workspace:*`, `pnpm --filter`, `pnpm -w list`) was unreliable in this repo's
+setup and silently no-op'd instead of erroring, so `file:` + `--ignore-workspace`
+is the supported path. If you clone this repo elsewhere, make sure
+`sorokit-core` is checked out as a sibling folder (`../sorokit-core` relative
+to this repo) before running `pnpm install`.
+
 ## Transaction Feedback
 
 Drive `TransactionToast` from `@sorokit/core`:
