@@ -1,4 +1,4 @@
-import type { SorobanNetwork } from '@sorokit/core';
+import type { SorobanNetwork } from '../types';
 
 const cx = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(' ');
 
@@ -9,19 +9,19 @@ export interface NetworkBadgeProps {
 }
 
 const networkDotClass: Record<SorobanNetwork, string> = {
-  testnet: 'bg-sky-500',
-  mainnet: 'bg-emerald-500',
-  futurenet: 'bg-violet-500',
+  TESTNET: 'bg-sky-500',
+  PUBLIC: 'bg-emerald-500',
+  FUTURENET: 'bg-violet-500',
 };
 
 function formatNetwork(network: SorobanNetwork): string {
-  return network.charAt(0).toUpperCase() + network.slice(1);
+  return network.charAt(0).toUpperCase() + network.slice(1).toLowerCase();
 }
 
 /**
  * @example
  * ```tsx
- * <NetworkBadge network={network} expected="testnet" />
+ * <NetworkBadge network={network} expected="TESTNET" />
  * ```
  */
 export function NetworkBadge({ network, expected, className }: NetworkBadgeProps) {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { WalletId } from "@sorokit/core";
+import type { WalletId } from "../../types";
 import { useWalletState } from "../../hooks/useWalletState";
 import { Button } from "../shared/Button";
 import { WalletModal } from "./WalletModal";

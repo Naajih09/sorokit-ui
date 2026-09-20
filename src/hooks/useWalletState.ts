@@ -9,11 +9,6 @@ import { useWallet as useCoreWallet } from "@sorokit/core";
  *
  * This is intentional: sorokit-ui owns UI-flavored state (isConnected,
  * isConnecting, address naming); core stays a thin wrapper over the SDK.
- *
- * TODO: confirm core's actual `status` enum values against
- * sorokit-core/src/hooks/useWallet.ts — this assumes
- * 'idle' | 'connecting' | 'connected' | 'error'. Update the two
- * comparisons below if core's enum differs.
  */
 export function useWalletState() {
   const { account, status, error, adapter, connect, disconnect } = useCoreWallet();
@@ -28,12 +23,12 @@ export function useWalletState() {
 
   return {
     status,
-    address: account ?? null,
+    address: account?.publicKey ?? null,
     walletId: adapter?.id ?? null,
     error: error ?? null,
     isConnected: derived.isConnected,
     isConnecting: derived.isConnecting,
-    connect, // connect(walletId) — call directly with the id the user picked
+    connect,
     disconnect,
   };
 }

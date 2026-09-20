@@ -1,27 +1,30 @@
 import { useCallback, useState } from "react";
-import { useContract as useCoreContract } from "@sorokit/core";
+import { useContract as useCoreContract, type NetworkConfig } from "@sorokit/core";
 
 /**
- * @sorokit/core's useContract({ contractId, networkConfig }) returns raw
- * SDK handles (`contract`, `server`) and does no state management. This
- * hook is sorokit-ui's layer on top: it owns call status/result/error so
- * components (and the toast system) have something to render against.
- *
- * TODO: confirm the actual invocation method on the raw `contract` handle
- * from sorokit-core/src/hooks/useContract.ts (e.g. contract.call(...),
- * contract.invoke(...)) and swap the placeholder call below to match.
+ * @sorokit/core's useContract returns a raw Stellar contract handle plus the
+ * RPC server. This hook owns the UI-facing call lifecycle around it.
  */
 export type CallStatus = "idle" | "pending" | "success" | "error";
 
 export interface UseContractCallOptions {
   contractId: string;
-  networkConfig: unknown; // TODO: type against core's real NetworkConfig
+  networkConfig: NetworkConfig;
+}
+
+export interface UseContractCallResult<TResult = unknown> {
+  status: CallStatus;
+  result: TResult | null;
+  error: string | null;
+  call: (method: string, ...args: unknown[]) => Promise<TResult>;
+  contract: ReturnType<typeof useCoreContract>["contract"];
+  server: ReturnType<typeof useCoreContract>["server"];
 }
 
 export function useContractCall<TResult = unknown>({
   contractId,
   networkConfig,
-}: UseContractCallOptions) {
+}: UseContractCallOptions): UseContractCallResult<TResult> {
   const { contract, server } = useCoreContract({ contractId, networkConfig });
 
   const [status, setStatus] = useState<CallStatus>("idle");
@@ -33,17 +36,7 @@ export function useContractCall<TResult = unknown>({
       setStatus("pending");
       setError(null);
       try {
-        // Placeholder — replace with core's actual invocation call once
-        // confirmed. Kept generic so this compiles against an unknown
-        // contract shape without guessing a wrong method name silently.
-        const invoke = (contract as { call?: (m: string, ...a: unknown[]) => Promise<TResult> })
-          .call;
-        if (!invoke) {
-          throw new Error(
-            "useContractCall: confirm the invocation method on core's contract handle"
-          );
-        }
-        const value = await invoke.call(contract, method, ...args);
+        const value = (await (contract as any).call(method, ...args)) as TResult;
         setResult(value);
         setStatus("success");
         return value;

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { SorobanNetwork } from '@sorokit/core';
+import type { SorobanNetwork } from '../types';
 import { useClipboard } from '../hooks/useClipboard';
 
 const cx = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(' ');
@@ -16,15 +16,15 @@ export function truncateAddress(address: string): string {
 }
 
 const networkDotClass: Record<SorobanNetwork, string> = {
-  testnet: 'bg-sky-500',
-  mainnet: 'bg-emerald-500',
-  futurenet: 'bg-violet-500',
+  TESTNET: 'bg-sky-500',
+  PUBLIC: 'bg-emerald-500',
+  FUTURENET: 'bg-violet-500',
 };
 
 /**
  * @example
  * ```tsx
- * <AddressChip address={address} network="testnet" />
+ * <AddressChip address={address} network="TESTNET" />
  * ```
  */
 export function AddressChip({ address, network, className }: AddressChipProps) {

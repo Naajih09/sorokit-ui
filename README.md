@@ -32,13 +32,13 @@ module.exports = {
 };
 \`\`\`
 
-2. Import the stylesheet once in your app entry:
+1. Import the stylesheet once in your app entry:
 
 \`\`\`ts
 import "@sorokit/ui/styles.css";
 \`\`\`
 
-3. Wrap your app in \`ToastProvider\` and drop in \`ConnectButton\`:
+1. Wrap your app in \`ToastProvider\` and drop in \`ConnectButton\`:
 
 \`\`\`tsx
 import { ToastProvider, ConnectButton } from "@sorokit/ui";
@@ -54,4 +54,4 @@ export function App() {
 
 ## Dark mode
 
-Toggle the \`dark\` class on \`<html>\` or any ancestor element — all components re-theme via CSS variables automatically.
+Toggle the \`dark\` class on the html element or any ancestor element — all components re-theme via CSS variables automatically.

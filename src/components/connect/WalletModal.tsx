@@ -1,4 +1,4 @@
-import type { WalletId } from "@sorokit/core";
+import type { WalletId } from "../../types";
 import { Modal } from "../shared/Modal";
 import { Button } from "../shared/Button";
 import { WalletIcon } from "./WalletIcon";

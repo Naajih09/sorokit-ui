@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useWallet, type WalletId } from '@sorokit/core';
+import type { WalletId } from '../types';
 import { useClipboard } from '../hooks/useClipboard';
-import { NetworkBadge } from './NetworkBadge';
+import { useWalletState } from '../hooks/useWalletState';
 import { truncateAddress } from './AddressChip';
 
 const cx = (...classes: Array<string | false | null | undefined>) => classes.filter(Boolean).join(' ');
@@ -21,7 +21,7 @@ const baseButtonClass =
  * ```
  */
 export function ConnectButton({ walletId = 'freighter', className }: ConnectButtonProps) {
-  const { isConnected, isConnecting, address, network, connect, disconnect } = useWallet(walletId);
+  const { isConnected, isConnecting, address, connect, disconnect } = useWalletState();
   const { copied, copy } = useClipboard();
   const [open, setOpen] = React.useState(false);
   const menuRef = React.useRef<HTMLDivElement | null>(null);
@@ -69,13 +69,13 @@ export function ConnectButton({ walletId = 'freighter', className }: ConnectButt
     }
   };
 
-  const onTriggerClick = () => {
+  const onTriggerClick = async () => {
     if (isConnected) {
       setOpen((current) => !current);
       return;
     }
 
-    connect();
+    await connect(walletId);
   };
 
   const label = isConnecting ? 'Connecting...' : isConnected && address ? truncateAddress(address) : 'Connect Wallet';
@@ -104,7 +104,6 @@ export function ConnectButton({ walletId = 'freighter', className }: ConnectButt
           />
         ) : null}
         <span>{label}</span>
-        {isConnected && network ? <NetworkBadge network={network} /> : null}
       </button>
 
       {open && address ? (

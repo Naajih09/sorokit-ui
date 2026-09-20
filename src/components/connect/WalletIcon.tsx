@@ -1,4 +1,4 @@
-import type { WalletId } from "@sorokit/core";
+import type { WalletId } from "../../types";
 
 const ICONS: Record<WalletId, string> = {
   freighter: "/icons/freighter.svg",
