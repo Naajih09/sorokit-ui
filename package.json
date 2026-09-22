@@ -23,6 +23,7 @@
                     "dev":  "vite build --watch",
                     "build":  "tsc --emitDeclarationOnly && vite build",
                     "test":  "vitest run",
+                    "verify:package":  "node scripts/verify-package.mjs",
                     "lint":  "eslint src --ext .ts,.tsx",
                     "typecheck":  "tsc --noEmit"
                 },
