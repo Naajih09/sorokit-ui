@@ -32,13 +32,13 @@ module.exports = {
 };
 \`\`\`
 
-1. Import the stylesheet once in your app entry:
+2. Import the stylesheet once in your app entry:
 
 \`\`\`ts
 import "@sorokit/ui/styles.css";
 \`\`\`
 
-1. Wrap your app in \`ToastProvider\` and drop in \`ConnectButton\`:
+3. Wrap your app in \`ToastProvider\` and drop in \`ConnectButton\`:
 
 \`\`\`tsx
 import { ToastProvider, ConnectButton } from "@sorokit/ui";
@@ -51,6 +51,8 @@ export function App() {
   );
 }
 \`\`\`
+
+A consumer smoke-test app is included in the `examples/consumer` directory to validate the package the same way an external app would import it.
 
 ## Component usage
 
