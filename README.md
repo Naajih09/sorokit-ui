@@ -52,6 +52,28 @@ export function App() {
 }
 \`\`\`
 
+## Component usage
+
+```tsx
+import {
+  AddressChip,
+  ConnectButton,
+  NetworkBadge,
+  TransactionToast,
+} from "@sorokit/ui";
+
+export function WalletPanel() {
+  return (
+    <section>
+      <ConnectButton />
+      <AddressChip address={address} network="TESTNET" />
+      <NetworkBadge network="TESTNET" />
+      <TransactionToast status="success" successMessage="Swap confirmed" />
+    </section>
+  );
+}
+```
+
 ## Dark mode
 
 Toggle the \`dark\` class on the html element or any ancestor element — all components re-theme via CSS variables automatically.
